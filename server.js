@@ -4,13 +4,13 @@ const hbs = require('express-handlebars');
 
 
 
-// Initialize express app
+// Initialize the Express app
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 
 
-// Configure express to use handlebars
+// Configure the Express view engine to use handlebars
 app.engine('handlebars', hbs());
 app.set('view engine', 'handlebars');
 
