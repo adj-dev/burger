@@ -1,5 +1,5 @@
 // Dependencies
-const { connection, connectDB } = require('./connection.js');
+const { connection, connectDB } = require('./connection');
 
 
 
@@ -8,46 +8,48 @@ connectDB();
 
 
 
-// Fetches all rows from MySQL database
-function selectAll() {
-  connection.query(
-    'SELECT * FROM burgers;',
-    function (err, result) {
-      if (err) throw err;
-      console.log(result);
-    }
-  )
-}
+const orm = {
+  // Fetches all rows from MySQL database
+  selectAll: function (callback) {
+    connection.query(
+      'SELECT * FROM burgers;',
+      function (err, result) {
+        if (err) throw err;
+        // Remove wrapper
+        let burgers = result.map(burger => {
+          let { id, burger_name, devoured } = burger;
+          return { id, burger_name, devoured };
+        });
 
+        return callback(burgers);
+      }
+    )
+  },
 
+  insertOne: function (burger_name, callback) {
+    connection.query(
+      'INSERT INTO burgers (burger_name) VALUES (?);',
+      [burger_name],
+      function (err, result) {
+        if (err) throw err;
+        return callback();
+      }
+    )
+  },
 
-
-function insertOne(burger_name) {
-  connection.query(
-    'INSERT INTO burgers (burger_name) VALUES (?);',
-    [burger_name],
-    function (err, result) {
-      if (err) throw err;
-      console.log(result);
-    }
-  )
-}
-
-
-
-
-function updateOne(burger_name) {
-  connection.query(
-    'UPDATE burgers SET devoured = true WHERE ?',
-    [{ burger_name }],
-    function (err, result) {
-      if (err) throw err;
-      console.log(result);
-    }
-  )
+  updateOne: function (id, callback) {
+    connection.query(
+      'UPDATE burgers SET devoured = true WHERE id = ?',
+      [id],
+      function (err, result) {
+        if (err) throw err;
+        return callback();
+      }
+    )
+  }
 }
 
 
 
 // Export these methods as a module
-module.exports = { selectAll, insertOne, updateOne };
+module.exports = orm;

@@ -1,1 +1,17 @@
-<h1>This is where the burgers will go</h1>
+<div class="container">
+  <div class="burger-lists">
+    <div class="devoured">
+      {{#each burgers.notDevoured}}
+      <div class="item">
+        <p>{{ this.burger_name }}</p>
+        <button type="submit" id="devour" data-id="{{this.id}}">Devour!</button>
+      </div>
+      {{/each}}
+    </div>
+    <div class="notdevoured">
+      {{#each burgers.devoured}}
+      <p>{{ this.burger_name }}</p>
+      {{/each}}
+    </div>
+  </div>
+</div>

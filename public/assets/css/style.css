@@ -25,6 +25,11 @@ img#logo {
   justify-content: center;
 }
 
+/* Burger Lists */
+
+.burger-lists {
+  display: flex;
+}
 
 /* Footer */
 
