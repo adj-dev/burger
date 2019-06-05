@@ -1,5 +1,6 @@
 <div class="container">
   <div class="burger-lists">
+    {{#if burgers.notDevoured }}
     <div class="devoured">
       {{#each burgers.notDevoured}}
       <div class="item">
@@ -8,10 +9,13 @@
       </div>
       {{/each}}
     </div>
+    {{/if}}
+    {{#if burgers.devoured}}
     <div class="notdevoured">
       {{#each burgers.devoured}}
       <p>{{ this.burger_name }}</p>
       {{/each}}
     </div>
+    {{/if}}
   </div>
 </div>
